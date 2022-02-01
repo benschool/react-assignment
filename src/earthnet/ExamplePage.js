@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import Dashboard from '../layouts/Dashboard/Dashboard';
-import { Typography, makeStyles, Grid, List, ListItem, ListItemText } from '@material-ui/core';
+import { Typography, makeStyles, Grid } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EsaLogo from '../EsaLogo';
 import EsaPaper from '../layouts/components/EsaPaper/EsaPaper';
 import EsaSelect from '../layouts/components/EsaSelect/EsaSelect';
+import EsaList from '../layouts/components/EsaList/EsaList';
 import {
   Portlet,
   PortletHeader,
   PortletLabel,
   PortletContent,
   EsaButton,
-  PortletToolbar
 } from '../layouts/components';
 
 const styles = theme => ({
@@ -70,20 +70,6 @@ export default function ExamplePage() {
   const classes = useStyles();
   const [singleValue, onChangeSingle] = useState(1);
   const [multiValue, onChangeMulti] = useState([]);
-  const [selectedOptions, setSelect] = useState([]);
-
-  const handleSelect = value => {
-    const currentIndex = selectedOptions.indexOf(value);
-    const newSelectedOptions = [...selectedOptions];
-    if (currentIndex === -1) {
-      newSelectedOptions.push(value);
-    } else {
-      newSelectedOptions.splice(currentIndex, 1);
-    }
-    setSelect(newSelectedOptions);
-  };
-
-  const isSelected = value => selectedOptions.includes(value);
 
   return (
     <Dashboard>
@@ -139,30 +125,9 @@ export default function ExamplePage() {
               </Portlet>
             </Grid>
             <Grid item xs={7}>
-              <Portlet>
-                <PortletHeader className={classes.header}>
-                  <PortletLabel title="Title" />
-                  <PortletToolbar>
-                    <MoreVertIcon />
-                  </PortletToolbar>
-                </PortletHeader>
-                <PortletContent className={classes.portletContent} noPadding>
-                  <List>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
-                      option => (
-                        <ListItem
-                          key={option}
-                          className={classes.listItem}
-                          selected={isSelected(option)}
-                          onClick={() => handleSelect(option)}
-                        >
-                          <ListItemText primary={`item-${option}`} />
-                        </ListItem>
-                      )
-                    )}
-                  </List>
-                </PortletContent>
-              </Portlet>
+              <EsaList
+                options={Array(10).fill('').map((e, i) => `list=${i + 1}`)}
+              />
             </Grid>
           </Grid>
         </Grid>
